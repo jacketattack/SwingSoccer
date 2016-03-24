@@ -11,5 +11,8 @@
     "type": "git",
     "url": "git+https://github.com/carlosdarienvizcaino/SwingSoccer.git"
   },
+  "dependencies": {
+      "express": "^4.13.4"
+  }
   "homepage": "https://github.com/carlosdarienvizcaino/SwingSoccer#readme"
 }
