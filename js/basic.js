@@ -1,11 +1,11 @@
-var renderer = PIXI.autoDetectRenderer(800, 600,{backgroundColor : 0x1099bb});
+var renderer = PIXI.autoDetectRenderer(1000, 600,{backgroundColor : 0x1099bb});
 document.body.appendChild(renderer.view);
 
 // create the root of the scene graph
 var stage = new PIXI.Container();
 
 // create a texture from an image path
-var texture = PIXI.Texture.fromImage('assets/bunny.png');
+var texture = PIXI.Texture.fromImage('img/bunny.png');
 
 // create a new Sprite using the texture
 var bunny = new PIXI.Sprite(texture);
@@ -15,8 +15,8 @@ bunny.anchor.x = 0.5;
 bunny.anchor.y = 0.5;
 
 // move the sprite to the center of the screen
-bunny.position.x = 200;
-bunny.position.y = 150;
+bunny.position.x = 500;
+bunny.position.y = 300;
 
 stage.addChild(bunny);
 
