@@ -10,10 +10,5 @@
     "type": "git",
     "url": "git+https://github.com/carlosdarienvizcaino/SwingSoccer.git"
   },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/carlosdarienvizcaino/SwingSoccer/issues"
-  },
   "homepage": "https://github.com/carlosdarienvizcaino/SwingSoccer#readme"
 }
