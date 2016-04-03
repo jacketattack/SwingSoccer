@@ -1,0 +1,25 @@
+Currently: I have achieved initial goal of being able to move sprite around
+on screen with keyboard arrows.
+
+Goal: Refactor code so that you can create a 'player' object that can have
+injected to it a 'controller'/keyboard that handles input control..basic.js
+should be small.
+
+    Steps:
+        - Investigate grant's code and understand the Immediately Invoked
+            function thing for the player object
+        - Create that for 'player' object
+        - Be able to spawn 'player' in middle of screen with bunny sprite
+        - create IIF for 'keyboard'
+        - input keyboard into player
+
+========
+Questions
+========
+- What is the data I need to represent for this game..what kind of data are we 
+    dealing with?
+    - Game Score
+    - Position of players
+    - vx & vy of players
+    - position of ball
+    - vx + vy of ball
