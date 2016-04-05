@@ -3,30 +3,18 @@
  * keyCodes on the keyboard and then call the specific handler functions
  * for the object this keyboard is bound to.
  */
-class Keyboard {
+function Keyboard(keyCode, controllerObject) {
 
-    constructor(config) {
-        this.keyCode = config.keyCode;
-        this.keyIsDown = false;
-        this.keyIsUp = true;
-        this.press = config.controllerObject.press.bind(config.controllerObject);
-        this.release = config.controllerObject.release.bind(config.controllerObject);
-    }
+    this.keyCode = keyCode;
+    this.keyIsDown = false;
+    this.keyIsUp = true;
+    this.press = controllerObject.press.bind(controllerObject);
+    this.release = controllerObject.release.bind(controllerObject);
 
-    delegateEvents() {
-        window.addEventListener('keydown', this.downHandler.bind(this));
-        window.addEventListener('keyup', this.upHandler.bind(this));
-    }
-
-    undelegateEvents() {
-        window.removeEventListener('keydown', this.downHandler.bind(this));
-        window.removeEventListener('keyup', this.upHandler.bind(this));
-    }
-
-    downHandler(event) {
+    this.downHandler = function(event) {
         if (event.keyCode == this.keyCode) {
-            if (this.keyIsUp && this.controllerObject.press) {
-                this.press();
+            if (this.keyIsUp && this.press) {
+                this.press(this.keyCode);
             }
 
             this.keyIsDown = true;
@@ -35,14 +23,28 @@ class Keyboard {
         event.preventDefault();
     }
 
-    upHandler(event) {
+    this.upHandler = function(event) {
         if (event.keyCode == this.keyCode) {
-            if (this.keyIsDown && this.controllerObject.release) {
-                this.release();
+            if (this.keyIsDown && this.release) {
+                this.release(this.keyCode);
             }
             this.keyIsDown = false;
             this.keyIsUp = true;
         }
         event.preventDefault();
     }
+
+    this.delegateEvents = function() {
+        window.addEventListener('keydown', this.downHandler.bind(this));
+        window.addEventListener('keyup', this.upHandler.bind(this));
+    }
+
+    this.undelegateEvents = function() {
+        window.removeEventListener('keydown', this.downHandler.bind(this));
+        window.removeEventListener('keyup', this.upHandler.bind(this));
+    }
+
+    this.delegateEvents();
 }
+
+module.exports = Keyboard;

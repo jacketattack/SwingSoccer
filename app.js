@@ -1,11 +1,16 @@
 var express = require('express');
+var assets = require('connect-assets');
 
 var app = express();
 
-app.set('views', '.');
+app.set('views', __dirname + '/lib');
 app.set('view engine', 'jade');
-app.use(express.static('js'));
 app.use(express.static('img'));
+app.use(assets({
+    paths: [
+        './lib',
+    ]
+}))
 
 app.get('/', function(req, res) {
     res.render('swingsoccer');
