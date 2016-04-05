@@ -18,7 +18,14 @@ class Player {
      */
     constructor(config) {
         this.sprite = config.sprite;
-        this.input = config.input;
+        this.velocityX = 0;
+        this.velocityY = 0;
+        this.keyboard = config.keyboard;
+    }
+
+    update() {
+        this.sprite.x += this.velocityX;
+        this.sprite.y += this.velocityY;
     }
 }
 
