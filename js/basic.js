@@ -4,147 +4,160 @@ var GAME_HEIGHT = 600;
 var renderer = PIXI.autoDetectRenderer(GAME_WIDTH, GAME_HEIGHT,{backgroundColor : 0x1099bb});
 document.body.appendChild(renderer.view);
 
-// create the root of the scene graph
+// Create Stage
 var stage = new PIXI.Container();
 
 // create a texture from an image path
 var texture = PIXI.Texture.fromImage('bunny.png');
 
-// create a new Sprite using the texture
+// Create Stage Dimensions
+var boxWidth = renderer.width / 100;
+var boxHeight = renderer.height / 100;
+
+// Create Avatar
 var bunny = new PIXI.Sprite(texture);
 
-// center the sprite's anchor point
-bunny.anchor.x = 0.5;
-bunny.anchor.y = 0.5;
+// Rope Holding Place
+var rope = null;
 
-// move the sprite to the center of the screen
-bunny.position.x = 500;
-bunny.position.y = 300;
+// Position Avatar
+bunny.position.x = 200;
+bunny.position.y = 200;
 
-// keyboard control 
-var leftArrowCode = 37;
-var rightArrowCode = 39;
-var upArrowCode = 38;
-var downArrowCode = 40;
-
-var bunnyVelocityX = 0;
-var bunnyVelocityY = 0;
-
-bunnyLeftArrowHandler = keyboard(leftArrowCode);
-bunnyLeftArrowHandler.press = function() {
-    console.log("left pressed");
-    bunnyVelocityX = -2;
-}
-bunnyLeftArrowHandler.release = function() {
-    console.log("left released!");
-    if (!bunnyRightArrowHandler.isDown) {
-        bunnyVelocityX = 0;
-    }
-}
-
-bunnyRightArrowHandler = keyboard(rightArrowCode);
-bunnyRightArrowHandler.press = function() {
-    bunnyVelocityX = 2;
-}
-bunnyRightArrowHandler.release = function() {
-    if (!bunnyLeftArrowHandler.isDown) {
-        bunnyVelocityX = 0;
-    }
-}
-
-bunnyUpArrowHandler = keyboard(upArrowCode);
-bunnyUpArrowHandler.press = function() {
-    bunnyVelocityY = -2;
-}
-bunnyUpArrowHandler.release = function() {
-    if (!bunnyDownArrowHandler.isDown) {
-        bunnyVelocityY = 0;
-    }
-}
-
-bunnyDownArrowHandler = keyboard(downArrowCode);
-bunnyDownArrowHandler.press = function() {
-    bunnyVelocityY = 2;
-}
-bunnyDownArrowHandler.release = function() {
-    if (!bunnyUpArrowHandler.isDown) {
-        bunnyVelocityY = 0;
-    }
-}
-
+// Add Avatar to Stage
 stage.addChild(bunny);
 
-// start animating
+addDownKeyEventListener();
+
 animate();
-function animate() {
+
+function animate(){
+    
     requestAnimationFrame(animate);
-
-    // just for fun, let's rotate mr rabbit a little
-    bunny.rotation += 0.1;
-    bunny.x += bunnyVelocityX;
-    bunny.y += bunnyVelocityY;
-    handleWalls();
-
-    // render the container
+    
     renderer.render(stage);
-}
-
-function handleWalls() {
-    if (bunny.x > GAME_WIDTH - 5) {
-        bunny.x = GAME_WIDTH - 5;
+    
+    if ( !isRopePainted() ){
+       moveAvatarDownByFactorOf(bunny,2) 
     }
-    if (bunny.x < 5) {
-        bunny.x = 5;
-    }
-    if (bunny.y > GAME_HEIGHT - 5) {
-        bunny.y = GAME_HEIGHT - 5;
-    }
-    if (bunny.y < 5) {
-        bunny.y = 5;
+    else {
+      rope.update();   
     }
 }
 
-// key left = 37
-//up = 38
-// right = 39
-// down = 40
+function addDownKeyEventListener(){
+    
+    document.addEventListener('keydown', onKeyDown);
+}
 
-function keyboard(keyCode) {
-    var key = {};
-    key.code = keyCode;
-    key.isDown = false;
-    key.isUp = true;
-    key.press = undefined;
-    key.release = undefined;
+function onKeyDown(keyBoardEvent){
+   
+   var key = keyBoardEvent.keyCode;
+   avatarMovementKeys(key);
+   ropeMovement(key);
+}
 
-    key.downHandler = function(event) {
-        if (event.keyCode == key.code) {
-            if (key.isUp && key.press) {
-                key.press();
-            }
-                key.isUp = false;
-                key.isDown = true;
+function moveAvatarDownByFactorOf(avatar,factoryOf){
+    avatar.position.y += boxHeight/factoryOf;
+}
+
+function ropeMovement(key){
+    
+    if(key === KeyCodes.SPACE_BAR){
+        
+        if( isRopePainted() ){
+            console.log("Removing Rope");
+            removeRope();
+        }else{
+            
+            console.log("Rope Stuff.......");
+            var ropeLength = calculateRopeLength(bunny);
+            var ropeOrigin = calculateRopeOrigin(bunny);
+            rope = new Rope(ropeOrigin,ropeLength);
+            rope.update();
+            rope.display(stage);
         }
-        event.preventDefault();
-    };
-
-    key.upHandler = function(event) {
-        if (event.keyCode == key.code) {
-            if (key.isDown && key.release) {
-                key.release();
-            }
-            key.isUp = true;
-            key.isDown = false;
-        }
-        event.preventDefault();
     }
-
-    window.addEventListener(
-            'keydown', key.downHandler.bind(key), false
-    );
-
-    window.addEventListener(
-            'keyup', key.upHandler.bind(key), false
-    );
-    return key;
 }
+function avatarMovementKeys(key){
+   
+    if( key === KeyCodes.UP_ARROW ){
+        moveAvatarUp(bunny);
+    }
+    else if ( key === KeyCodes.DOWN_ARROW ){
+       moveAvatarDown(bunny);
+    }
+    else if ( key === KeyCodes.LEFT_ARROW ){
+        moveAvatarLeft(bunny);
+    }
+    else if( key === KeyCodes.RIGHT_ARROW){
+        moveAvatarRight(bunny);
+    }
+    
+}
+
+function moveAvatarUp(avatar){
+    if (avatar.position.y > boxHeight){
+        avatar.position.y -= boxHeight;
+    }
+}
+
+function moveAvatarDown(avatar){
+    if (avatar.position.y < renderer.height - boxHeight){
+        avatar.position.y += boxHeight;
+    }
+}
+
+function moveAvatarLeft(avatar){
+    if(avatar.position.x > 0){
+        avatar.position.x -= boxWidth;
+    }
+    
+    if( isRopePainted() ){
+        console.log("In here......");
+        var bunnyOrigin = { x: bunny.position.x, y :bunny.position.y};
+        var bunnyNewOrigin = { x: bunny.position.x + 5, y: bunny.position.y + 5};
+        rope.handleMove(bunnyOrigin, bunnyNewOrigin);
+        rope.update();
+        rope.display();
+    }
+}
+
+function moveAvatarRight(avatar){
+    if(avatar.position.x < renderer.width - boxWidth ){
+        avatar.position.x += boxWidth;
+    }
+}
+
+function isRopePainted(){
+    return rope != null;
+}
+
+function removeRope(){
+    rope.remove(stage);
+    rope = null;                                                                                        
+}
+
+function paintRope(sh){
+    
+   var ropeGraphics = new PIXI.Graphics();
+   
+   var yellowColor = 0xFFFF00;
+   ropeGraphics.beginFill(yellowColor);
+   
+   var ropeWidth = 5;
+   var ropeHeight = bunny.position.y;
+   var ropeRadius = 5;
+   ropeGraphics.drawRoundedRect(bunny.position.x,0,ropeWidth,ropeHeight,ropeRadius);
+   stage.addChild(ropeGraphics);
+   return ropeGraphics;
+}
+
+function calculateRopeLength(avatar){
+    return avatar.position.y;
+}
+
+function calculateRopeOrigin(avatar){
+    return { x : avatar.position.x, y: avatar.position.y};
+}
+
