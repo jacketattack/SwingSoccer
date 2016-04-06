@@ -36,12 +36,12 @@ function animate(){
     requestAnimationFrame(animate);
     
     renderer.render(stage);
-    
-    if ( !isRopePainted() ){
+  
+   if ( !isRopePainted() ){
        moveAvatarDownByFactorOf(bunny,2) 
     }
     else {
-      rope.update();   
+        rope.move(stage);
     }
 }
 
@@ -66,16 +66,18 @@ function ropeMovement(key){
     if(key === KeyCodes.SPACE_BAR){
         
         if( isRopePainted() ){
-            console.log("Removing Rope");
-            removeRope();
+            
+            rope.removeGraphics(stage);
+            rope = null;
+            console.log("The rope is painted");
         }else{
             
-            console.log("Rope Stuff.......");
-            var ropeLength = calculateRopeLength(bunny);
             var ropeOrigin = calculateRopeOrigin(bunny);
-            rope = new Rope(ropeOrigin,ropeLength);
-            rope.update();
-            rope.display(stage);
+            var ropeLength = calculateRopeLength(bunny);
+            rope = new Rope(ropeOrigin, ropeLength);
+            
+            // TODO: paint
+            rope.move(stage);
         }
     }
 }
@@ -114,7 +116,7 @@ function moveAvatarLeft(avatar){
     }
     
     if( isRopePainted() ){
-        console.log("In here......");
+        console.log("Moving Pendelum to the left");
         var bunnyOrigin = { x: bunny.position.x, y :bunny.position.y};
         var bunnyNewOrigin = { x: bunny.position.x + 5, y: bunny.position.y + 5};
         rope.handleMove(bunnyOrigin, bunnyNewOrigin);
@@ -158,6 +160,6 @@ function calculateRopeLength(avatar){
 }
 
 function calculateRopeOrigin(avatar){
-    return { x : avatar.position.x, y: avatar.position.y};
+    return { x : avatar.position.x, y: 0};
 }
 

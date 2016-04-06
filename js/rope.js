@@ -1,30 +1,32 @@
 
 function Rope(origin, ropeLength){
     
+    // Origin the pivot position of the pendelum
     this.origin = origin || 0
     this.ropeLength = ropeLength || 0;
-    this.position = 0;
-    this.angle = Math.PI/4;
     
+    this.angle = Math.PI/4;  
+    this.ropeVelocity = 0.0;
+    this.ropeAcceleration = 0.0;
     this.damping = 0.995;
-    this.ropeVelocity = 0;
-    this.ropeAcceleration = 0;
-    
+        
     this.ropeGraphics = null;
 }
 
-Rope.prototype.move = function(){
+Rope.prototype.move = function(stage){
     this.update();
-    this.display();
+    this.display(stage);
 }
 
 Rope.prototype.update = function(){
     
    var gravity = 0.4;
    
-   this.ropeAcceleration = (-1 * gravity / this.ropeLength) * Math.sin(this.angle);  
+   this.ropeAcceleration = (-1 * gravity / this.ropeLength) * Math.sin(this.angle);
    
-   this.ropeVelocity *= this.damping;  
+   this.ropeVelocity += this.ropeAcceleration;
+    
+   this.ropeVelocity *= this.damping;
    
    this.angle += this.ropeVelocity;
 }
@@ -33,44 +35,34 @@ Rope.prototype.display = function(stage){
     
    this.calculateRopePosition();
    
-  if ( this.ropeGraphics != null) {
-      
-      this.ropeGraphics.x = this.origin.x;
-      this.ropeGraphics.y = this.origin.y;
-      
-  } else {
-   this.ropeGraphics = new PIXI.Graphics();
-   var yellowColor = 0xFFFF00;
-   this.ropeGraphics.beginFill(yellowColor);
+   this.removeGraphics(stage);
    
-   var ropeRadius = 1.0;
-   var ropeWidth = 5;
+   var line = new PIXI.Graphics();
+   var purpleColor = 0x9b59b6;
+   line.lineStyle(1,purpleColor);
    
-   this.ropeGraphics.drawRoundedRect(this.origin.x,0,ropeWidth,this.position.y,ropeRadius);
+   line.moveTo(this.origin.x, this.origin.y);
+   line.lineTo(this.position.x, this.position.y);
+   line.endFill();
+  
+   this.ropeGraphics = line; 
    stage.addChild(this.ropeGraphics);
-   }
-   
 }
 
 Rope.prototype.handleMove = function(mx, my){
-    
-   // var diff = RopeVector.sub(this.origin,new RopeVector(mx,my));
-    
+   
     var diff = new RopeVector(5,5);
     this.angle = Math.atan2(-1*diff.y,diff.x) - Math.PI/2;
 }
 
-Rope.prototype.remove = function(stage){
+Rope.prototype.removeGraphics = function(stage){
     stage.removeChild(this.ropeGraphics);
     this.ropeGraphics = null;
 }
 
 Rope.prototype.calculateRopePosition = function(){
-    
-    console.log("Calculating new position" );
-    console.log( this.ropeLength * Math.sin(this.angle));
-    console.log( this.ropeLength * Math.cos(this.angle));
-    
+   
+   //  Calculates the Cartesian Coordinates
     this.position = new RopeVector(
         this.ropeLength * Math.sin(this.angle),
         this.ropeLength * Math.cos(this.angle)
