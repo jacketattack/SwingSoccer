@@ -1,8 +1,9 @@
 
-function Rope(origin, ropeLength){
+function Rope(origin, position, ropeLength){
     
     // Origin the pivot position of the pendelum
-    this.origin = origin || 0
+    this.origin = origin || 0;
+    this.position = position || 0;
     this.ropeLength = ropeLength || 0;
     
     this.angle = Math.PI/4;  
@@ -15,7 +16,8 @@ function Rope(origin, ropeLength){
 
 Rope.prototype.move = function(stage){
     this.update();
-    this.display(stage);
+    this.moveAndDisplay(stage);
+    
 }
 
 Rope.prototype.update = function(){
@@ -26,15 +28,12 @@ Rope.prototype.update = function(){
    
    this.ropeVelocity += this.ropeAcceleration;
     
-   this.ropeVelocity *= this.damping;
+   //this.ropeVelocity *= this.damping;
    
    this.angle += this.ropeVelocity;
 }
 
 Rope.prototype.display = function(stage){
-    
-   this.calculateRopePosition();
-   
    this.removeGraphics(stage);
    
    var line = new PIXI.Graphics();
@@ -49,9 +48,14 @@ Rope.prototype.display = function(stage){
    stage.addChild(this.ropeGraphics);
 }
 
+Rope.prototype.moveAndDisplay = function(stage){
+    this.calculateRopePosition();
+    this.display(stage);
+}
+
 Rope.prototype.handleMove = function(mx, my){
    
-    var diff = new RopeVector(5,5);
+    var diff = new RopeVector(mx,my);
     this.angle = Math.atan2(-1*diff.y,diff.x) - Math.PI/2;
 }
 

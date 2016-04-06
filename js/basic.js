@@ -21,8 +21,8 @@ var bunny = new PIXI.Sprite(texture);
 var rope = null;
 
 // Position Avatar
-bunny.position.x = 200;
-bunny.position.y = 200;
+bunny.position.x = 400;
+bunny.position.y = 50;
 
 // Add Avatar to Stage
 stage.addChild(bunny);
@@ -41,7 +41,10 @@ function animate(){
        moveAvatarDownByFactorOf(bunny,2) 
     }
     else {
-        rope.move(stage);
+        
+        if (rope.ropeAcceleration != 0){
+            rope.move(stage);
+        }
     }
 }
 
@@ -66,18 +69,16 @@ function ropeMovement(key){
     if(key === KeyCodes.SPACE_BAR){
         
         if( isRopePainted() ){
-            
             rope.removeGraphics(stage);
             rope = null;
-            console.log("The rope is painted");
         }else{
             
             var ropeOrigin = calculateRopeOrigin(bunny);
             var ropeLength = calculateRopeLength(bunny);
-            rope = new Rope(ropeOrigin, ropeLength);
+            var ropePosition = calculateRopePosition(bunny);
+            rope = new Rope(ropeOrigin, ropePosition, ropeLength);
             
-            // TODO: paint
-            rope.move(stage);
+            rope.display(stage);
         }
     }
 }
@@ -116,19 +117,20 @@ function moveAvatarLeft(avatar){
     }
     
     if( isRopePainted() ){
-        console.log("Moving Pendelum to the left");
-        var bunnyOrigin = { x: bunny.position.x, y :bunny.position.y};
-        var bunnyNewOrigin = { x: bunny.position.x + 5, y: bunny.position.y + 5};
-        rope.handleMove(bunnyOrigin, bunnyNewOrigin);
-        rope.update();
-        rope.display();
-    }
+        rope.handleMove(-10,0);
+        rope.move(stage);
+   }
 }
 
 function moveAvatarRight(avatar){
     if(avatar.position.x < renderer.width - boxWidth ){
         avatar.position.x += boxWidth;
     }
+    
+    if( isRopePainted() ){
+        rope.handleMove(10,0);
+        rope.move(stage);
+   }
 }
 
 function isRopePainted(){
@@ -163,3 +165,6 @@ function calculateRopeOrigin(avatar){
     return { x : avatar.position.x, y: 0};
 }
 
+function calculateRopePosition(avatar){
+    return { x: avatar.position.x, y: avatar.position.y };
+}
