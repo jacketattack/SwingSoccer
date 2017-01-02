@@ -4,11 +4,12 @@ function PlayerInputController(config) {
 
     this.velocityX = 0;
     this.velocityY = 0;
+    this.ropeActive = false;
     this.upKey = config.up;
     this.downKey = config.down;
     this.leftKey = config.left;
     this.rightKey = config.right;
-    //this.rope = confif
+    this.ropeKey = config.rope;
     //this.respawn = {};
 
     this.press = function(keyCode) {
@@ -24,6 +25,9 @@ function PlayerInputController(config) {
                 break;
             case this.rightKey:
                 this.rightPress();
+                break;
+            case this.ropeKey:
+                this.ropePress();
                 break;
         }
     }
@@ -41,6 +45,9 @@ function PlayerInputController(config) {
                 break;
             case this.rightKey:
                 this.rightRelease();
+                break;
+            case this.ropeKey:
+                this.ropeRelease();
                 break;
         }
     }
@@ -85,11 +92,19 @@ function PlayerInputController(config) {
         }
     }
 
+    this.ropePress = function() {
+        // do i need to do anything?
+    }
+
+    this.ropeRelease = function() {
+        this.ropeActive = !this.ropeActive;
+    }
+
     this.up = new Keyboard(config.up, this);
     this.down = new Keyboard(config.down, this);
     this.left = new Keyboard(config.left, this);
     this.right = new Keyboard(config.right, this);
-    //this.rope = new Keyboard(config.rope, this.rope);
+    this.rope = new Keyboard(config.rope, this);
     //this.respawn = new Keyboard(config.respawn, this.respawn);
 
 
