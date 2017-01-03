@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/carlosdarienvizcaino/SwingSoccer.git"
+    "url": "git+https://github.com/jacketattack/SwingSoccer.git"
   },
   "dependencies": {
       "express": "^4.13.4",
@@ -17,5 +17,5 @@
       "webpack": "^1.12.14",
       "connect-assets": "^4.7.1"
   },
-  "homepage": "https://github.com/carlosdarienvizcaino/SwingSoccer#readme"
+  "homepage": "https://github.com/jacketattack/SwingSoccer#readme"
 }
