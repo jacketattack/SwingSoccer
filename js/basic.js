@@ -1,8 +1,9 @@
 var PlayerRenderer = require('./playerRenderer.js');
-var GAME_WIDTH = 1000;
-var GAME_HEIGHT = 600;
 
-var renderer = PIXI.autoDetectRenderer(GAME_WIDTH, GAME_HEIGHT,{backgroundColor : 0x1099bb});
+document.GAME_WIDTH = 1000;
+document.GAME_HEIGHT = 600;
+
+var renderer = PIXI.autoDetectRenderer(document.GAME_WIDTH, document.GAME_HEIGHT,{backgroundColor : 0x1099bb});
 document.body.appendChild(renderer.view);
 
 // create the root of the scene graph

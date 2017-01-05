@@ -4,7 +4,6 @@
  *
  * then finish off file with module.exports = Player
  *
- *
  * other files can say var Player = require('./player.js')
  * and then interact with var myPlayer = new Player();
  */
