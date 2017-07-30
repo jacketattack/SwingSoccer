@@ -2,20 +2,16 @@
   "name": "swingsoccer",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "browser-sync start --server --files=\"*/*.js\""
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jacketattack/SwingSoccer.git"
   },
   "dependencies": {
-      "express": "^4.13.4",
-      "jade": "^1.11.0",
-      "webpack": "^1.12.14",
-      "connect-assets": "^4.7.1"
+      "browser-sync": "^2.18.13"
   },
   "homepage": "https://github.com/jacketattack/SwingSoccer#readme"
 }
