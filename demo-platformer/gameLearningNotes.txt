@@ -1,0 +1,78 @@
+* Game loop is the core of every game
+    1. Update
+        - Get input from player
+        - Update game world (the logic/state of objects)
+    2. Render game world
+
+* In phaser, the game loop is handled automatically via 'game states'. A 'game state' represents one
+    'screen' in the game (loading screen, main menu, etc).
+    - Game state Parts
+        1. Init -- bind key listeners
+        2. Preload -- load assets (images, json files, audio, etc)
+        3. Create -- create sprites from assets
+        4. Update*    Update and render are 'game loop' and called automatically each frame (60 fps)
+            - intersting.. update on sprites is called every game loop automatically too, not just GameState
+            - i wonder if all major classes/entities have an 'update' method
+        5. Render* 
+        6. Shutdown
+
+    * "A game state in Phaser is just an Object with some methods that we can override. We will be overriding some of these in order to load an image and render it on the screen."
+    - You create an object that has methods with the names of the above steps that Phaser will invoke when that step in the
+        game state occurs.
+            ex.
+            MyState = {};
+            MyState.preload = function() { // do preload stuff };
+    - Interesting, you can refer to your variable that is the Phaser.Game instance as well as other instance variables you define in
+        parts of the GameState while inside one of the functions defined under your instance of GameState (1-7 above).
+
+    * Can easily restart a game state with
+        this.game.state.restart(); // where game is a Phaser.game
+
+* For this game, the level data is saved as json files in data/
+    - neat, come up with your own schema and have code parse it to easily generate levels
+    - you can have initial values for walls, ground, coins, hero, enemies, etc
+
+* Whether it is images, files, sprites, etc, Phaser has different entity libraries for creating these
+    this.game.load.image/json/audio
+    this.game.add.image/json/audio
+    this.game.add.sprite
+
+
+* For sprites that have more complex business logic  (i.e. moving, jumping, etc.), Phaser expects us to **extend** Phaser.Sprite.
+    - Ex. of inheritance in js
+        function Car() {
+            // call parent constructor
+            Vehicle.call(this);
+        }
+
+        // clone Vehicle's prototype into Car
+        Car.prototype = Object.create(Vehicle.prototype);
+        // restore the constructor at Car
+        Car.prototype.constructor = Car;    
+
+    - sprite.visible = true/false (for groups too!)
+                        
+* Keyboard listening - Phaser.Key
+    - Create instances of Phaser.Key with this.game.input.keyboard.addKeys method which allows us to create multiple keys at once
+
+* Phaser has a simple physics engine called "Arcade Physics", NICE!
+    1. enable physics on a sprite, this will give it a 'body'
+        - this.game.physics.enabled = true; (in a sprite)
+    2. now in your 'move' methods, you can modify the velocity + other params of the BODY of that sprit
+        - this.body.velocity.x = direction * SPEED;
+    3. PLUS you get bounds of screen collision checks out of the box
+        - this.body.collideWorldBounds = true; // DONE
+    4. PLUS gravity
+        - affects just sprites in engine (have bodies)
+        - this.game.physics.arcade.gravity.y = GRAVITY;
+    5. plus collisions
+        - this.game.physics.arcade.collide(Sprite|group|.., Sprite|group..)
+    6. plus overlap
+    7. tons more....
+
+* Animations & Sprite Sheets
+    - Animations are keyframe-based.. So image displayed for a sprite will change periodically and make it appear animated
+    - Accessed under 'animations' member of sprite
+        - sprite.animations.add(name, array of indices in animation, fps, shouldLoop?)
+        - sprite.animations.play(name)
+
