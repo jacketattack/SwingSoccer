@@ -156,7 +156,7 @@ PlayState.init = function(data) {
     this.hasKey = false;
 
     // Set the level according to data.level
-    this.level = (data.level || 0) % TOTAL_NUMBER_OF_LEVELS;
+    //this.level = (data.level || 0) % TOTAL_NUMBER_OF_LEVELS;
 };
 
 // this method will be invoked when the 'PlayState' game state reaches the 'preload' step
@@ -166,7 +166,7 @@ PlayState.preload = function() {
     this.game.load.image('background', 'images/background.png'); // 'background' is the key we give the asset for later reference
 
     // now let's load the json file containing the level data
-    this.game.load.json('level:0', 'data/level00.json');
+    //this.game.load.json('level:0', 'data/level00.json');
     this.game.load.json('level:1', 'data/level01.json');
 
     // before we can create sprites, we need to load the images the platform will use
