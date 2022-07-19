@@ -8,7 +8,7 @@
     1. `brew update`
     2. `brew install node`
 2. Simple http server for hosting files with live updates
-- `npm -g install browser-sync`
+    1. `npm -g install browser-sync`
 
 ### Start
 - `npm start`
