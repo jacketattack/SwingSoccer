@@ -11,6 +11,7 @@ Check out [Phaser 3 Examples](https://github.com/photonstorm/phaser3-examples) t
     2. `brew install node`
 2. Simple http server for hosting files with live updates
     1. `npm -g install browser-sync`
+    2. `npm install`
 
 ### Start
 - `npm start`
