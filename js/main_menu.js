@@ -6,12 +6,7 @@ export default class MainMenu extends Phaser.Scene {
     create() {
         this.set_background();
 
-        // TODO: add a "start" button
-        // button = game.add.button(game.world.centerX - 95, 400, 'button', start_game, this, 2, 1, 0);
-
-        // this.input.once('pointerdown', () => {
-        //     this.scene.start('MainGame');
-        // });
+        // TODO: add a "start" button that invokes the start_game() method
     }
 
     start_game() {
