@@ -1,4 +1,29 @@
-window.onload = function() {
-    let game = new Phaser.Game(960, 600, Phaser.AUTO, 'game');
+import Preloader from './preloader.js';
+import MainMenu from './main_menu.js';
+import MainGame from './main_game.js';
+
+var config = {
+    type: Phaser.AUTO,
+    scale: {
+        mode: Phaser.Scale.FIT,
+        parent: 'phaser-example',
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+        width: 800,
+        height: 600
+    },
+    backgroundColor: '#1b1464',
+    parent: 'phaser-example',
+    physics: {
+        default: 'matter',
+        // matter: {
+        //     debug: true
+        // }
+    },
+    scene: [
+        Preloader,
+        MainMenu,
+        MainGame
+    ]
 };
 
+var game = new Phaser.Game(config);
