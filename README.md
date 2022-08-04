@@ -1,17 +1,48 @@
 # Swing Soccer
 
-This was developed using the [Phaser 3 Framework](https://phaser.io/phaser3).
+This was developed using the [Phaser 3 Framework](https://phaser.io/phaser3) and [Parcel](https://parceljs.org/) as the web application bundler.
 
 Check out [Phaser 3 Examples](https://github.com/photonstorm/phaser3-examples) to see examples on how to leverage Phaser 3.
 
-## Setup for Mac to run locally
+## Setup to run locally
+
 ### Install Dependencies
-1. Install NPM and Node if you do not already have them
-    1. `brew update`
-    2. `brew install node`
-2. Simple http server for hosting files with live updates
-    1. `npm -g install browser-sync`
-    2. `npm install`
+
+1. (_Optional_) It is highly recommended to use [Node Version Manager](https://github.com/nvm-sh/nvm) (nvm) to install Node.js and npm.
+
+2. Install Node.js and npm with nvm:
+
+   1. `nvm install node`
+   2. `nvm use node`
+
+3. Install Parcel:
+
+   1. `npm install -g parcel-bundler`
+
+4. Install dev dependencies needed to run Swing Soccer:
+   1. `cd path/to/swing/soccer/repo`
+   2. `npm install`
 
 ### Start
-- `npm start`
+
+- `npm run start`
+- Open your browser to [http:localhost:8000](http:localhost:8000)
+
+## Project Configurations
+
+### Prettier
+
+This project uses [Prettier](https://github.com/prettier/prettier), an opinionated code formatter.
+
+- The `.prettierrc` file will show you the selected configuration options.
+  More informations about the format options can be found [here](https://prettier.io/docs/en/options.html).
+
+- The `.prettierignore` file will show you which files and/or directories are ignored when Prettier runs formatting.
+
+To check formatting without making changes locally: `npm run prettier-check` or `npx prettier --check .`
+To apply the formatting changes locally: `npm run prettier-write` or `npx prettier --write .`
+
+### TypeScript
+
+The selected compiler options for each project are set in the `tsconfig.json` file.
+More informations about the available options can be found [here](https://www.typescriptlang.org/tsconfig).
