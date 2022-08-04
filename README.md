@@ -20,7 +20,8 @@ Check out [Phaser 3 Examples](https://github.com/photonstorm/phaser3-examples) t
    1. `npm install -g parcel-bundler`
 
 4. Install dev dependencies needed to run Swing Soccer:
-   1. `npm install`
+   1. `cd path/to/swing/soccer/repo`
+   2. `npm install`
 
 ### Start
 
@@ -32,10 +33,11 @@ Check out [Phaser 3 Examples](https://github.com/photonstorm/phaser3-examples) t
 ### Prettier
 
 This project uses [Prettier](https://github.com/prettier/prettier), an opinionated code formatter.
-The selected configuration options can be found in the `.prettierrc` file in the root project folder.
+
+- The `.prettierrc` file will show you the selected configuration options.
 More informations about the format options can be found [here](https://prettier.io/docs/en/options.html).
 
-Update the `.prettierignore` file to ignore certain files and/or directories when Prettier runs formatting.
+- The `.prettierignore` file will show you which files and/or directories are ignored when Prettier runs formatting.
 
 To check formatting without making changes locally: `npm run prettier-check` or `npx prettier --check .`
 To apply the formatting changes locally: `npm run prettier-write` or `npx prettier --write .`
