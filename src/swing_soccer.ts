@@ -26,11 +26,7 @@ const game_config: Phaser.Types.Core.GameConfig = {
     //     debug: true
     // }
   },
-  scene: [
-    Preloader,
-    MainMenu,
-    MainGame
-  ],
+  scene: [Preloader, MainMenu, MainGame],
 };
 
 export default new Phaser.Game(game_config);

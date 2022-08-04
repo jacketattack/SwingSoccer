@@ -18,9 +18,19 @@ export class MainMenu extends Phaser.Scene {
     );
 
     // add the start button
-    let x_center: number = this.cameras.main.worldView.x + this.cameras.main.width / 2;
-    let y_center: number = this.cameras.main.worldView.y + this.cameras.main.height / 2;
-    let start_button = new Button(this, x_center, y_center, "#000000", "button_green", "Start", () => this.start_game());
+    let x_center: number =
+      this.cameras.main.worldView.x + this.cameras.main.width / 2;
+    let y_center: number =
+      this.cameras.main.worldView.y + this.cameras.main.height / 2;
+    let start_button = new Button(
+      this,
+      x_center,
+      y_center,
+      "#000000",
+      "button_green",
+      "Start",
+      () => this.start_game()
+    );
   }
 
   start_game(): void {

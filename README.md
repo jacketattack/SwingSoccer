@@ -35,7 +35,7 @@ Check out [Phaser 3 Examples](https://github.com/photonstorm/phaser3-examples) t
 This project uses [Prettier](https://github.com/prettier/prettier), an opinionated code formatter.
 
 - The `.prettierrc` file will show you the selected configuration options.
-More informations about the format options can be found [here](https://prettier.io/docs/en/options.html).
+  More informations about the format options can be found [here](https://prettier.io/docs/en/options.html).
 
 - The `.prettierignore` file will show you which files and/or directories are ignored when Prettier runs formatting.
 
